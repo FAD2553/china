@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture Chinoise</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://unpkg.com/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Data
+        const articles = {
+            culture: [
+                {
+                    title: "Les Festivals Traditionnels Chinois",
+                    content: "Les festivals chinois sont des célébrations importantes qui marquent le rythme de la vie traditionnelle chinoise. Du Nouvel An chinois à la Fête de la Mi-Automne, chaque festival raconte une histoire unique de la culture chinoise. Ces célébrations sont l'occasion de se réunir en famille, de partager des repas traditionnels et de perpétuer des coutumes ancestrales qui se transmettent de génération en génération.",
+                    image: "fes.jpg",
+                    category: "Culture",
+                    date: "15 Novembre 2024"
+                },
+                {
+                    title: "L'Art de la Calligraphie",
+                    content: "La calligraphie chinoise est considérée comme l'une des plus hautes formes d'art en Chine. Cet art millénaire combine la précision du geste, la maîtrise de l'encre et une profonde compréhension des caractères chinois. Chaque trait raconte une histoire, et chaque caractère est une œuvre d'art en soi. La calligraphie n'est pas seulement une forme d'écriture, c'est une expression de l'âme de l'artiste.",
+                    image: "ca.jpg",
+                    category: "Culture",
+                    date: "14 Novembre 2024"
+                }
+            ],
+            history: [
+                {
+                    title: "La Route de la Soie",
+                    content: "La Route de la Soie était un réseau de routes commerciales qui reliait la Chine à l'Europe. Plus qu'une simple route commerciale, elle était un pont entre les civilisations, permettant l'échange non seulement de marchandises, mais aussi d'idées, de technologies et de cultures. Son influence sur le développement des civilisations est inestimable et continue d'inspirer les relations internationales modernes.",
+                    image: "soie.jpeg",
+                    category: "Histoire",
+                    date: "13 Novembre 2024"
+                },
+                {
+                    title: "Les Dynasties Chinoises",
+                    content: "L'histoire de la Chine est marquée par une succession de dynasties puissantes, chacune ayant contribué à façonner la civilisation chinoise telle que nous la connaissons aujourd'hui. Des Qin aux Ming, chaque dynastie a laissé un héritage unique en termes d'art, d'architecture, de philosophie et d'innovations technologiques. Cette riche histoire continue d'influencer la Chine moderne.",
+                    image: "di.jpeg",
+                    category: "Histoire",
+                    date: "12 Novembre 2024"
+                }
+            ]
+        };
+
+        const lessons = [
+            {
+                character: "你好",
+                pinyin: "Nǐ hǎo",
+                meaning: "Bonjour",
+                example: "你好，我是小明。",
+                translation: "Bonjour, je suis Xiao Ming."
+            },
+            {
+                character: "谢谢",
+                pinyin: "Xièxiè",
+                meaning: "Merci",
+                example: "谢谢你的帮助。",
+                translation: "Merci de ton aide."
+            }
+        ];
+
+        const news = [
+            {
+                title: "CONFERENCE PUBLIQUE",
+                date: "30 Novembre 2024",
+                content: "L'ambassade de la Republique Populaire de Chine au Burkina Faso et l'AJPD-BF organise une conference publique sur la Bourse d'Etude du Gouvernement Chinois 2025-2026",
+                image: "ev.jpg",
+                category: "Événement",
+                gallery: [
+                        {
+                            url: "https://images.unsplash.com/photo-1582650625119-3a31f8fa2699",
+                            caption: "Célébrations du Nouvel An"
+                        } 
+                    ]  
+            },
+            {
+                title: "5ieme Edition du Festival de la Cooperation Sino-Burkinabe FESCO-SB",
+                date: "Les 22 et 23 Novembre 2024",
+                content: "Theme: Processus d'industrialisation du Burkina Faso, Quelle contribution de la CHINE ?",
+                image: "ev2.jpg",
+                category: "Culture"
+            }
+        ];
+
+        // UI Functions
+        function createArticleCard(article) {
+            return `
+                <div class="card article-card">
+                    <img src="${article.image}" alt="${article.title}" class="card-image">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="date">${article.date}</span>
+                            <span class="category">${article.category}</span>
+                        </div>
+                        <h3 class="card-title">${article.title}</h3>
+                        <div class="content-preview">${article.content.substring(0, 150)}...</div>
+                        <div class="content-full hidden">${article.content}</div>
+                        <button class="read-more-btn" onclick="toggleArticle(this)">
+                            <span>Lire plus</span>
+                            <i class="ri-arrow-down-line"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createLessonCard(lesson) {
+            return `
+                <div class="card lesson-card">
+                    <div class="card-content">
+                        <h3 class="character">${lesson.character}</h3>
+                        <p class="pinyin">${lesson.pinyin}</p>
+                        <p class="meaning">${lesson.meaning}</p>
+                        <div class="example">
+                            <p class="chinese">${lesson.example}</p>
+                            <p class="translation">${lesson.translation}</p>
+                        </div>
+                        <div class="lesson-actions">
+                            <button class="practice-btn" onclick="practiceLesson(this)">
+                                <i class="ri-book-open-line"></i>
+                                Pratiquer
+                            </button>
+                            <button class="audio-btn" onclick="playAudio(this)">
+                                <i class="ri-volume-up-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createNewsCard(newsItem) {
+            return `
+                <div class="card news-card">
+                    <img src="${newsItem.image}" alt="${newsItem.title}" class="card-image">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="date">${newsItem.date}</span>
+                            <span class="category">${newsItem.category}</span>
+                        </div>
+                        <h3 class="card-title">${newsItem.title}</h3>
+                        <p class="news-preview">${newsItem.content}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Gallery Modal
+        function createGalleryModal(images, startIndex = 0) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            let currentIndex = startIndex;
+
+            function updateModalContent() {
+                const image = images[currentIndex];
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close" onclick="closeGallery()">
+                            <i class="ri-close-line"></i>
+                        </button>
+                        <div class="modal-body">
+                            ${currentIndex > 0 ? `
+                                <button class="nav-btn prev" onclick="changeImage(${currentIndex - 1})">
+                                    <i class="ri-arrow-left-line"></i>
+                                </button>
+                            ` : ''}
+                            <div class="modal-image-container">
+                                <img src="${image.url}" alt="${image.caption}" class="modal-image">
+                                <p class="modal-caption">${image.caption}</p>
+                                <span class="modal-counter">${currentIndex + 1}/${images.length}</span>
+                            </div>
+                            ${currentIndex < images.length - 1 ? `
+                                <button class="nav-btn next" onclick="changeImage(${currentIndex + 1})">
+                                    <i class="ri-arrow-right-line"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateModalContent();
+            document.body.appendChild(modal);
+
+            // Make functions available globally
+            window.closeGallery = function() {
+                modal.remove();
+            };
+
+            window.changeImage = function(newIndex) {
+                currentIndex = newIndex;
+                updateModalContent();
+            };
+        }
+
+        // Interactive Functions
+        function toggleArticle(button) {
+            const card = button.closest('.card');
+            const preview = card.querySelector('.content-preview');
+            const full = card.querySelector('.content-full');
+            const text = button.querySelector('span');
+            const icon = button.querySelector('i');
+
+            preview.classList.toggle('hidden');
+            full.classList.toggle('hidden');
+            
+            if (preview.classList.contains('hidden')) {
+                text.textContent = 'Voir moins';
+                icon.classList.replace('ri-arrow-down-line', 'ri-arrow-up-line');
+            } else {
+                text.textContent = 'Lire plus';
+                icon.classList.replace('ri-arrow-up-line', 'ri-arrow-down-line');
+            }
+        }
+
+        function practiceLesson(button) {
+            const card = button.closest('.lesson-card');
+            const character = card.querySelector('.character').textContent;
+            const meaning = card.querySelector('.meaning').textContent;
+            alert(`Pratique: ${character} (${meaning})`);
+        }
+
+        function playAudio(button) {
+            const card = button.closest('.lesson-card');
+            const character = card.querySelector('.character').textContent;
+            alert(`Audio pour: ${character}`);
+        }
+
+        function openGallery(section) {
+            let images = [];
+            if (section === 'culture') {
+                data.articles.culture.forEach(article => {
+                    images = images.concat(article.gallery || []);
+                });
+            } else if (section === 'history') {
+                data.articles.history.forEach(article => {
+                    images = images.concat(article.gallery || []);
+                });
+            } else if (section === 'news') {
+                data.news.forEach(item => {
+                    images = images.concat(item.gallery || []);
+                });
+            }
+            
+            if (images.length > 0) {
+                createGalleryModal(images);
+            }
+        }
+
+        // Interactive Functions
+        function toggleArticle(button) {
+            const card = button.closest('.card');
+            const preview = card.querySelector('.content-preview');
+            const full = card.querySelector('.content-full');
+            const text = button.querySelector('span');
+            const icon = button.querySelector('i');
+
+            preview.classList.toggle('hidden');
+            full.classList.toggle('hidden');
+            
+            if (preview.classList.contains('hidden')) {
+                text.textContent = 'Voir moins';
+                icon.classList.replace('ri-arrow-down-line', 'ri-arrow-up-line');
+            } else {
+                text.textContent = 'Lire plus';
+                icon.classList.replace('ri-arrow-up-line', 'ri-arrow-down-line');
+            }
+        }
+
+        function practiceLesson(button) {
+            const card = button.closest('.lesson-card');
+            const character = card.querySelector('.character').textContent;
+            const meaning = card.querySelector('.meaning').textContent;
+            alert(`Pratique: ${character} (${meaning})`);
+        }
+
+        function playAudio(button) {
+            const card = button.closest('.lesson-card');
+            const character = card.querySelector('.character').textContent;
+            alert(`Audio pour: ${character}`);
+        }
+
+        function openGallery(section) {
+            let images = [];
+            if (section === 'culture') {
+                data.articles.culture.forEach(article => {
+                    images = images.concat(article.gallery || []);
+                });
+            } else if (section === 'history') {
+                data.articles.history.forEach(article => {
+                    images = images.concat(article.gallery || []);
+                });
+            } else if (section === 'news') {
+                data.news.forEach(item => {
+                    images = images.concat(item.gallery || []);
+                });
+            }
+            
+            if (images.length > 0) {
+                createGalleryModal(images);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const menuIcon = document.getElementById('menuIcon');
+            const navLinks = document.getElementById('navLinks');
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+
+            // Mobile Menu Toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuIcon.classList.toggle('ri-menu-line');
+                menuIcon.classList.toggle('ri-close-line');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-container')) {
+                    navLinks.classList.remove('active');
+                    menuIcon.classList.replace('ri-close-line', 'ri-menu-line');
+                }
+            });
+
+            // Scroll to Top Button
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        navLinks.classList.remove('active');
+                        menuIcon.classList.replace('ri-close-line', 'ri-menu-line');
+                    }
+                });
+            });
+
+            // Render content
+            function renderContent() {
+                // Render Culture Articles
+                const cultureSection = document.getElementById('culture');
+                if (cultureSection) {
+                    const cultureContent = articles.culture.map(createArticleCard).join('');
+                    cultureSection.innerHTML += `
+                        <div class="container">
+                            <div class="articles-grid">
+                                ${cultureContent}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Render History Articles
+                const historySection = document.getElementById('history');
+                if (historySection) {
+                    const historyContent = articles.history.map(createArticleCard).join('');
+                    historySection.innerHTML += `
+                        <div class="container">
+                            <div class="articles-grid">
+                                ${historyContent}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Render Lessons
+                const learnSection = document.getElementById('learn');
+                if (learnSection) {
+                    const lessonsContent = lessons.map(createLessonCard).join('');
+                    learnSection.innerHTML += `
+                        <div class="container">
+                            <div class="lessons-grid">
+                                ${lessonsContent}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Render News
+                const newsSection = document.getElementById('news');
+                if (newsSection) {
+                    const newsContent = news.map(createNewsCard).join('');
+                    newsSection.innerHTML += `
+                        <div class="container">
+                            <div class="news-grid">
+                                ${newsContent}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            renderContent();
+        });
+    </script>
+</head>
+<body>
+    <button id="scrollToTop" class="scroll-to-top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <i class="ri-ancient-pavilion-fill"></i>
+                <h1 class="logo">中国文化</h1>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                <i class="ri-menu-line" id="menuIcon"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#culture"><i class="ri-ancient-gate-fill"></i>Culture</a></li>
+                <li><a href="#history"><i class="ri-book-fill"></i>Histoire</a></li>
+                <li><a href="#learn"><i class="ri-translate-2"></i>Apprendre</a></li>
+                <li><a href="#news"><i class="ri-newspaper-fill"></i>Actualités</a></li>
+                <li><a href="#contact"><i class="ri-contacts-fill"></i>Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>Découvrez la Culture Chinoise</h1>
+                <p>Explorez la richesse millénaire de la civilisation chinoise à travers son histoire, sa culture et sa langue</p>
+            </div>
+        </section>
+
+        <section id="culture" class="section">
+            <div class="container">
+                <h2 class="section-title">Culture Chinoise</h2>
+                <p class="section-description">
+                    Découvrez la richesse de la culture chinoise à travers ses traditions millénaires.
+                </p>
+            </div>
+        </section>
+
+        <section id="history" class="section">
+            <div class="container">
+                <h2 class="section-title">Histoire de la Chine</h2>
+                <p class="section-description">
+                    Explorez l'histoire fascinante de la civilisation chinoise.
+                </p>
+            </div>
+        </section>
+
+        <section id="learn" class="section">
+            <div class="container">
+                <h2 class="section-title">Apprenez le Chinois</h2>
+                <p class="section-description">
+                    Découvrez les bases de la langue chinoise avec nos leçons interactives.
+                </p>
+            </div>
+        </section>
+
+        <section id="news" class="section">
+            <div class="container">
+                <h2 class="section-title">Actualités</h2>
+                <p class="section-description">
+                    Restez informé des derniers événements de la culture chinoise.
+                </p>
+                <button class="view-photos">Voir les photos</button>
+
+<!-- Modal pour afficher les photos -->
+<div class="photo-modal hidden">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div class="photos-container">
+      <!-- Exemple de photo avec commentaire -->
+      <div class="photo-item">
+        <img src="ph1.jpg" alt="Photo 1">
+        <p>La visite de l'ambassadeur de Chine</p>
+      </div>
+      <div class="photo-item">
+        <img src="ph2.jpg" alt="Photo 2">
+        <p>les etudiants de l'Institut Confucius</p>
+      </div>
+      <div class="photo-item"></div>
+        <img src="ph3.jpg" alt="Photo 2">
+        <p>les etudiants de l'Institut Confucius</p>
+      </div>
+      <div class="photo-item"></div>
+        <img src="ph4.jpg" alt="Photo 2">
+        <p>les etudiants de l'Institut Confucius</p>
+      </div>
+    </div>
+  </div>
+</div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <div class="footer-logo">
+                            <i class="ri-ancient-pavilion-fill"></i>
+                            <span>中国文化</span>
+                        </div>
+                        <p class="footer-description">
+                            Découvrez la richesse de la culture chinoise et apprenez le mandarin
+                        </p>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Liens Utiles</h3>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="bf.china-embassy.org/fra" target="_blank">
+                                    <i class="ri-external-link-line"></i>
+                                    Ambassade de Chine au Burkina
+                                </a>
+                            </li>
+                            <li>
+                                <a href="bf.china-embassy.org/fra" target="_blank">
+                                    <i class="ri-external-link-line"></i>
+                                    Institut Confucius au Burkina
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+1234567890">
+                                    <i class="ri-phone-line"></i>
+                                    +226 07 14 28 62
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://wa.me/+22607142862">
+                                    <i class="ri-whatsapp-line"></i>
+                                    WhatsApp
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>Suivez-nous</h3>
+                        <div class="social-links">
+                            <a href="bf.china-embassy.org/fra" class="social-link" target="_blank">
+                                <i class="ri-facebook-fill"></i>
+                            </a>
+                            <a href="https://wa.me/+22607142862" class="social-link" target="_blank">
+                                <i class="ri-whatsapp-fill"></i>
+                            </a>
+                            <a href="#" class="social-link" target="_blank">
+                                <i class="ri-telegram-fill"></i>
+                            </a>
+                            <a href="#" class="social-link" target="_blank">
+                                <i class="ri-twitter-x-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Culture Chinoise. Tous droits réservés.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
