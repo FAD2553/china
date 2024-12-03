@@ -33,7 +33,7 @@ body {
 .hero {
     height: 100vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                      url('https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=2000');
+                      url('photo-1508804185872-d7badad00f7d.jpeg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
