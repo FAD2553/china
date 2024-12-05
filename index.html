@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Culture Chinoise</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
     <link rel="stylesheet" href="styles.css">
     <link href="https://unpkg.com/remixicon/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -75,6 +76,8 @@
                         } 
                     ]  
             },
+
+
             {
                 title: "5ieme Edition du Festival de la Cooperation Sino-Burkinabe FESCO-SB",
                 date: "Les 22 et 23 Novembre 2024",
@@ -147,54 +150,6 @@
             `;
         }
 
-        // Gallery Modal
-        function createGalleryModal(images, startIndex = 0) {
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            let currentIndex = startIndex;
-
-            function updateModalContent() {
-                const image = images[currentIndex];
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <button class="modal-close" onclick="closeGallery()">
-                            <i class="ri-close-line"></i>
-                        </button>
-                        <div class="modal-body">
-                            ${currentIndex > 0 ? `
-                                <button class="nav-btn prev" onclick="changeImage(${currentIndex - 1})">
-                                    <i class="ri-arrow-left-line"></i>
-                                </button>
-                            ` : ''}
-                            <div class="modal-image-container">
-                                <img src="${image.url}" alt="${image.caption}" class="modal-image">
-                                <p class="modal-caption">${image.caption}</p>
-                                <span class="modal-counter">${currentIndex + 1}/${images.length}</span>
-                            </div>
-                            ${currentIndex < images.length - 1 ? `
-                                <button class="nav-btn next" onclick="changeImage(${currentIndex + 1})">
-                                    <i class="ri-arrow-right-line"></i>
-                                </button>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-            }
-
-            updateModalContent();
-            document.body.appendChild(modal);
-
-            // Make functions available globally
-            window.closeGallery = function() {
-                modal.remove();
-            };
-
-            window.changeImage = function(newIndex) {
-                currentIndex = newIndex;
-                updateModalContent();
-            };
-        }
-
         // Interactive Functions
         function toggleArticle(button) {
             const card = button.closest('.card');
@@ -249,7 +204,7 @@
             }
         }
 
-        // Interactive Functions
+      // Interactive Functions
         function toggleArticle(button) {
             const card = button.closest('.card');
             const preview = card.querySelector('.content-preview');
@@ -441,12 +396,99 @@
     </header>
 
     <main>
-        <section id="hero" class="hero">
-            <div class="hero-content">
-                <h1>Découvrez la Culture Chinoise</h1>
-                <p>Explorez la richesse millénaire de la civilisation chinoise à travers son histoire, sa culture et sa langue</p>
+        <div class="slider">
+
+
+            <div class="list">
+    
+                <div class="item">
+                    <img src="./img.jpg" alt="">
+    
+                    <div class="content">
+                        <div class="title">Découvrez la Culture</div>
+                        <div class="type">CHINOISE</div>
+                        <div class="description">
+                            Explorez la richesse millénaire de la civilisation chinoise à travers son histoire, sa culture et sa langue
+                        </div>
+                        <div class="button">
+                            <button><a href="#culture">DECOUVRIR</a></button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="item">
+                    <img src="./img2.jpg" alt="">
+    
+                    <div class="content">
+                        <div class="title">Découvrez la Culture</div>
+                        <div class="type">CHINOISE</div>
+                        <div class="description">
+                            Explorez la richesse millénaire de la civilisation chinoise à travers son histoire, sa culture et sa langue
+                        </div>
+                        <div class="button">
+                            <button><a href="#culture">DECOUVRIR</a></button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="item">
+                    <img src="./img3.jpeg" alt="">
+    
+                    <div class="content">
+                        <div class="title">Découvrez la Culture</div>
+                        <div class="type">CHINOISE</div>
+                        <div class="description">
+                            Explorez la richesse millénaire de la civilisation chinoise à travers son histoire, sa culture et sa langue
+                        </div>
+                        <div class="button">
+                            <button><a href="#culture">DECOUVRIR</a></button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="item">
+                    <img src="./img4.jpg" alt="">
+    
+                    <div class="content">
+                        <div class="title">Découvrez la Culture</div>
+                        <div class="type">CHINOISE</div>
+                        <div class="description">
+                            Explorez la richesse millénaire de la civilisation chinoise à travers son histoire, sa culture et sa langue
+                        </div>
+                        <div class="button">
+                            <button><a href="#culture">DECOUVRIR</a></button>
+                        </div>
+                    </div>
+                </div>
+    
             </div>
-        </section>
+    
+    
+            <div class="thumbnail">
+    
+                <div class="item">
+                    <img src="./img.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img src="./img2.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img src="./img3.jpeg" alt="">
+                </div>
+                <div class="item">
+                    <img src="./img4.jpg" alt="">
+                </div>
+    
+            </div>
+    
+    
+            <div class="nextPrevArrows">
+                <button class="prev"> < </button>
+                <button class="next"> > </button>
+            </div>
+    
+    
+        </div>
 
         <section id="culture" class="section">
             <div class="container">
@@ -481,33 +523,7 @@
                 <p class="section-description">
                     Restez informé des derniers événements de la culture chinoise.
                 </p>
-                <button class="view-photos">Voir les photos</button>
-
-<!-- Modal pour afficher les photos -->
-<div class="photo-modal hidden">
-  <div class="modal-content">
-    <span class="close-modal">&times;</span>
-    <div class="photos-container">
-      <!-- Exemple de photo avec commentaire -->
-      <div class="photo-item">
-        <img src="ph1.jpg" alt="Photo 1">
-        <p>La visite de l'ambassadeur de Chine</p>
-      </div>
-      <div class="photo-item">
-        <img src="ph2.jpg" alt="Photo 2">
-        <p>les etudiants de l'Institut Confucius</p>
-      </div>
-      <div class="photo-item"></div>
-        <img src="ph3.jpg" alt="Photo 2">
-        <p>les etudiants de l'Institut Confucius</p>
-      </div>
-      <div class="photo-item"></div>
-        <img src="ph4.jpg" alt="Photo 2">
-        <p>les etudiants de l'Institut Confucius</p>
-      </div>
-    </div>
-  </div>
-</div>
+                
             </div>
         </section>
 
@@ -540,7 +556,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="tel:+22607142862">
+                                <a href="tel:+1234567890">
                                     <i class="ri-phone-line"></i>
                                     +226 07 14 28 62
                                 </a>
@@ -579,5 +595,6 @@
             </div>
         </footer>
     </main>
+    <script src="app.js"></script>
 </body>
 </html>
