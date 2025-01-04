@@ -442,11 +442,37 @@
     </header>
 
     <main>
-        <section id="hero" class="hero">
+                <section id="hero" class="hero">
             <div class="hero-content">
                 <h1>Découvrez la Culture Chinoise</h1>
                 <p>Explorez la richesse millénaire de la civilisation chinoise à travers son histoire, sa culture et sa langue</p>
+                <button class="discover-btn" onclick="document.getElementById('culture').scrollIntoView({behavior: 'smooth'})">
+                    Découvrir
+                </button>
             </div>
+            <style>
+                .discover-btn {
+                    background-color: #FFD700;
+                    color: white;
+                    border: none;
+                    padding: 12px 30px;
+                    font-size: 1.2rem;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 30px;
+                    font-weight: 600;
+                    transition: background-color 0.3s ease;
+                    display: inline-block;
+                    text-align: center;
+                    letter-spacing: 0.5px;
+                    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+                }
+                
+                .discover-btn:hover {
+                    background-color: #FFC800;
+                    transform: scale(1.05);
+                }
+            </style>
         </section>
 
         <section id="culture" class="section">
